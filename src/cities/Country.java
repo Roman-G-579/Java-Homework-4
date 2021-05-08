@@ -44,7 +44,7 @@ public class Country {
 
         report.append(name).append("(").append(totalPopulation).append(")").append(" : ");
         for (City city : cities) {
-            report.append(city.getName() + "(" + city.getPopulation() + "),");
+            report.append(city.getName()).append("(").append(city.getPopulation()).append("),");
         }
         return report.delete(report.length() - 1, report.length()).toString();
     }
