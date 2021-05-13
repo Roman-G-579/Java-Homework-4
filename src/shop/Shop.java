@@ -5,13 +5,15 @@ import java.util.List;
 
 public class Shop {
 
-    private List<Integer> serials;
-
     private ArrayList<Instrument> instrumentsList = new ArrayList<>();
+    private List<Integer> serials = new ArrayList<>();
+    private int guitarCounter;
 
     public void add(Instrument i) {
-        Instrument.serialNum++;
         instrumentsList.add(i);
+        if (i instanceof Guitar) {
+            guitarCounter++;
+        }
     }
 
     public Instrument get(int serial) {
@@ -19,38 +21,53 @@ public class Shop {
     }
 
     public List<Integer> allSerials() {
-        serials = new ArrayList<>(instrumentsList.size());
-
-        for (int i = 0; i < instrumentsList.size(); i++) {
-            serials.add(i);
+        for (Instrument instrument : instrumentsList) {
+            serials.add(instrument.getSerial());
         }
         return serials;
     }
 
-    public List<Integer> guitarsOfType(Type t) {// FIXME: 08/05/2021
+    public List<Integer> guitarsOfType(Type t) {
         List<Integer> serialsOfType = new ArrayList<>();
 
+        for (Instrument instrument : instrumentsList) {
+            if (instrument instanceof Guitar) {
+                if (((Guitar) instrument).getType().equals(t)) {
+                    serialsOfType.add(instrument.getSerial());
+                }
+            }
+        }
         return serialsOfType;
     }
 
-    public void sell(int serial) throws MusicShopException { // FIXME: 08/05/2021 
-        for (int i = 0; i < instrumentsList.size(); i++) {
-            if (instrumentsList.get(i).getSerial() == serial) {
-                instrumentsList.remove(i);
+    public void sell(int serial) throws MusicShopException {
+
+        for (Instrument instrument : instrumentsList) {
+            if (instrument.getSerial() == serial) {
+                if (instrumentsList.get(serial) instanceof Guitar) {
+                    if (guitarCounter == 1) {
+                        throw new MusicShopException("Last guitar, cannot sell it");
+                    }
+                    guitarCounter--;
+                }
+                instrumentsList.remove(serial);
+                return;
             }
         }
-        throw new MusicShopException("The instrument is not available");
+        throw new MusicShopException("Instrument does not exist");
     }
 
-    public int sellAll(int[] serials) {// FIXME: 08/05/2021 
-        for (int i = 0; i < serials.length; i++) {
+    public int sellAll(int[] serials) {
+        int failedSales = 0;
+
+        for (int serial : serials) {
             try {
-                sell(i);
+                sell(serial);
             } catch (MusicShopException e) {
-                i++;
+                failedSales++;
             }
         }
-        return instrumentsList.size();
+        return failedSales;
     }
 }
 
