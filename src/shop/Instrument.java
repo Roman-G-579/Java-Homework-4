@@ -2,14 +2,14 @@ package shop;
 
 public abstract class Instrument {
 
-    protected static int serialNum = -1;
+    protected static int serialNum = 0;
     private String company;
     private int price;
+    protected int serial;
 
     public Instrument(String company, int price) {
         this.company = company;
         this.price = price;
-        serialNum++;
     }
 
     public int getPrice() {
@@ -20,5 +20,7 @@ public abstract class Instrument {
         return company;
     }
 
-    public abstract int getSerial();
+    public int getSerial(){
+        return serial;
+    }
 }
