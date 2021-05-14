@@ -2,10 +2,10 @@ package shop;
 
 public abstract class Instrument {
 
-    protected static int serialNum = 0;
+    protected static int serialNum;
+    protected int serial;
     private String company;
     private int price;
-    protected int serial;
 
     public Instrument(String company, int price) {
         this.company = company;
@@ -20,7 +20,7 @@ public abstract class Instrument {
         return company;
     }
 
-    public int getSerial(){
+    public int getSerial() {
         return serial;
     }
 }

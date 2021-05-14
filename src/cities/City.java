@@ -1,5 +1,6 @@
 package cities;
 
+import javax.management.ObjectName;
 import java.util.Objects;
 
 public class City implements Comparable<City> {
@@ -32,7 +33,7 @@ public class City implements Comparable<City> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) return true;// TODO: 14/05/2021 compare this method
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
         return Objects.equals(name, city.name) && Objects.equals(country, city.country);
@@ -42,7 +43,7 @@ public class City implements Comparable<City> {
     public int compareTo(City otherCity) {
         int comparison = getCountry().compareTo(otherCity.getCountry());
 
-        if (comparison == 0){
+        if (comparison == 0) {
             return getName().compareTo(otherCity.getName());
         }
         return comparison;

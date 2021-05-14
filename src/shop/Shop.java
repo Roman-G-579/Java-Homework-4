@@ -6,7 +6,6 @@ import java.util.List;
 public class Shop {
 
     private List<Instrument> instrumentsList = new ArrayList<>();
-
     private int guitarCounter;
 
     public void add(Instrument i) {
@@ -17,28 +16,20 @@ public class Shop {
     }
 
     public Instrument get(int serial) {
-  /*      if(serial < 0){
-            throw new MusicShopException("serial number invalid");
-        }*/
-        for (Instrument instrument: instrumentsList) {
-            if(instrument.getSerial() == serial){
+        for (Instrument instrument : instrumentsList) {
+            if (instrument.getSerial() == serial) {
                 return instrument;
             }
         }
         return null;
-        /*return serial > Instrument.serialNum ? null : instrumentsList.get(serial);*/
     }
 
     public List<Integer> allSerials() {
         List<Integer> serials = new ArrayList<>();
-        for (Instrument instrument: instrumentsList) {
+        for (Instrument instrument : instrumentsList) {
             serials.add(instrument.getSerial());
         }
         return serials;
-/*        for (Instrument instrument : instrumentsList) {
-            serials.add(instrument.getSerial());
-        }
-        return serials;*/
     }
 
     public List<Integer> guitarsOfType(Type t) {

@@ -93,7 +93,7 @@ public class ShopTester extends Tester {
 		checkEq(s.allSerials(), Arrays.asList(0,1,3,4,5));
 		checkEq(s.guitarsOfType(Type.ACOUSTIC), Arrays.asList(0, 4));
 		checkEq(s.sellAll(new int[] { 1, 2, 3 }), 1, "sellAll(1,2,3)");
-		checkEq(s.allSerials(), Arrays.asList(0,4,5)); // FIXME: 13/05/2021 
+		checkEq(s.allSerials(), Arrays.asList(0,4,5));
 		checkEqStr(s.get(4), "Guitar(Acoustic) Fender(4), price = 3000", "s.get(6)");
 	}
 

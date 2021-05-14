@@ -19,6 +19,7 @@ public class Guitar extends Instrument {
     }
 
     public String toString() {
-        return "Guitar(" + type + ") " + company + "(" + serial + ")" + ", price = " + price;
+        return "Guitar(" + type + ") " + company +
+                "(" + serial + ")" + ", price = " + price;
     }
 }
