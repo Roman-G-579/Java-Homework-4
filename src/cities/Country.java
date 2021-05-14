@@ -2,22 +2,28 @@ package cities;
 
 import java.util.*;
 
-public class Country {
+public class Country implements Comparable<Country> {
 
-    private Set<City> cities;
-    private int totalPopulation;
+    private Set<City> cities = new TreeSet<>();
     private String name;
 
     public Country(String name) {
         this.name = name;
-        cities = new HashSet<>();
+    }
+
+    private String getName() {
+        return name;
     }
 
     public void addCity(City city) {
+        if (!city.getCountry().equals(this)) {
+            throw new IllegalArgumentException();
+        }
         cities.add(city);
     }
 
     public int population() {
+        int totalPopulation = 0;
         for (City city : cities) {
             totalPopulation += city.getPopulation();
         }
@@ -25,27 +31,39 @@ public class Country {
     }
 
     public String toString() {
-        return name;
+        return getName();
     }
 
     public List<City> smallCities(int under) {
         List<City> underCity = new ArrayList<>();
-
         for (City city : cities) {
             if (city.getPopulation() < under) {
                 underCity.add(city);
             }
         }
-        return Collections.sort(underCity);
+        return underCity;
     }
 
     public String report() {
         StringBuilder report = new StringBuilder();
 
-        report.append(name).append("(").append(totalPopulation).append(")").append(" : ");
+        report.append(getName()).append("(").append(population()).append(")").append(" : ");
         for (City city : cities) {
-            report.append(city.getName()).append("(").append(city.getPopulation()).append("),");
+            report.append(city.getName()).append("(").append(city.getPopulation()).append("), ");
         }
-        return report.delete(report.length() - 1, report.length()).toString();
+        return report.delete(report.length() - 2, report.length()).toString();
+    }
+
+    @Override
+    public int compareTo(Country otherCountry) {
+        return getName().compareTo(otherCountry.getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return name.equals(country.name);
     }
 }
