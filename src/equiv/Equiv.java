@@ -10,6 +10,7 @@ public class Equiv<E> {
         int e1Found = -1;
         int e2Found = -1;
 
+        //if the list of sets is empty, create two new sets from the current elements
         if (listOfSets.size() == 0) {
             listOfSets.add(new HashSet<>());
             listOfSets.get(0).add(e1);
@@ -17,6 +18,7 @@ public class Equiv<E> {
             listOfSets.get(1).add(e2);
         }
 
+        //search the existing sets for the given elements
         for (int i = 0; i < listOfSets.size(); i++) {
             if (listOfSets.get(i).contains(e1)) {
                 e1Found = i;
@@ -25,17 +27,23 @@ public class Equiv<E> {
                 e2Found = i;
             }
         }
+        //if both elements are new to the arraylist
         if (e1Found == -1 && e2Found == -1) {
             listOfSets.add(new HashSet<>(Arrays.asList(e1, e2)));
+            return;
         }
 
+        //if the second element is found but the first is not
         if (e1Found == -1) {
-            listOfSets.add(new HashSet<>(Collections.singletonList(e1)));
+            listOfSets.get(e2Found).add(e1);
         }
+        //if the first element is found but the second is not
         if (e2Found == -1) {
-            listOfSets.add(new HashSet<>(Collections.singletonList(e2)));
+            listOfSets.get(e1Found).add(e2);
         }
-        if (e1Found != e2Found) {
+        //if the indices of the elements are found and different,
+        //adds one set to the other and removes the unnecessary set.
+        if (e1Found != e2Found && (e1Found != -1 && e2Found != -1)) {
             listOfSets.get(e1Found).addAll(listOfSets.get(e2Found));
             listOfSets.remove(listOfSets.get(e2Found));
         }
@@ -47,6 +55,6 @@ public class Equiv<E> {
                 return true;
             }
         }
-        return false;
+        return e1.equals(e2);
     }
 }
