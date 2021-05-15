@@ -21,18 +21,22 @@ public class Graph<V> {
         int v1Found = -1;
         int v2Found = -1;
 
-            for (Set<V> set : edges.values()) {
-                if (set.contains(v1) && set.contains(v2)) {
-                    throw new GraphException("Connection already established!");
-                }
-                if (set.contains(v1) && !set.contains(v2)) {
-                    v1Found = set;
-                }
-                if (!set.contains(v1) && set.contains(v2)) {
-                    v2Found = i;
+        //       if (edges.get(v1)|| edges.get(v2)) {// FIXME: 15/05/2021 check if the vertices exist
+        //           throw new GraphException("Error! An edge was not found");
+//        }
+        if (edges.get(v1).contains(v2)) {
+            throw new GraphException("Vertices already connected");
+        }
+
+        if (!edges.get(v1).contains(v2)) {
+            for (V element : edges.get(v1)) {
+                if (element.equals(v1)) {
+                    edges.get(element).add(v2); // :)
                 }
             }
         }
+    }
+
 
     public boolean hasEdge(V v1, V v2) {
 
