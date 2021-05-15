@@ -1,8 +1,6 @@
 package graph;
 
-import java.util.Collection;
-
-public class Maze implements GraphInterface<Place> {
+public class Maze {
 
     private int size;
     private int startX;
@@ -35,11 +33,9 @@ public class Maze implements GraphInterface<Place> {
                 (x == startX && y == startY) || (x == endX && y == endY)) {
             return false;
         }
-
         if (x > size - 1 || y > size - 1) {
             throw new IllegalArgumentException();
         }
-
         maze[x][y] = "@";
         return true;
     }
@@ -54,13 +50,5 @@ public class Maze implements GraphInterface<Place> {
             str.append("\n");
         }
         return str.toString();
-    }
-
-    public boolean isSolvable() {
-        Graph<Place> graph = new Graph<>();
-    }
-
-    public Collection<Place> neighbours(Place c){
-
     }
 }
