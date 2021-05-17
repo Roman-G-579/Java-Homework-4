@@ -1,6 +1,9 @@
 package graph;
 
-public class Maze {
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class Maze implements GraphInterface<Place> {
 
     private int size;
     private int startX;
@@ -50,5 +53,45 @@ public class Maze {
             str.append("\n");
         }
         return str.toString();
+    }
+
+//    public boolean isSolvable() throws GraphException {
+//        Place startPoint = new Place(startX, startY, size);
+//        Place endPoint = new Place(endX, endY, size);
+//
+//        graph.addVertex(startPoint);
+//        graph.addVertex(endPoint);
+//        return true;
+//    }
+
+    public Collection<Place> neighbours(Place p) {
+        ArrayList<Place> neighboursList = new ArrayList<>();
+
+
+        if (!maze[p.getX() - 1][p.getY() - 1].equals("@")) {
+            neighboursList.add(new Place(p.getX() - 1, p.getY() - 1, size));
+        }
+        if (!maze[p.getX()][p.getY() - 1].equals("@")) {
+            neighboursList.add(new Place(p.getX(), p.getY() - 1, size));
+        }
+        if (maze[p.getX() + 1][p.getY() - 1].equals("@")) {
+            neighboursList.add(new Place(p.getX() + 1, p.getY() - 1, size));
+        }
+        if (maze[p.getX() + 1][p.getY()].equals("@")) {
+            neighboursList.add(new Place(p.getX() + 1, p.getY(), size));
+        }
+        if (!maze[p.getX() + 1][p.getY() + 1].equals("@")) {
+            neighboursList.add(new Place(p.getX() + 1, p.getY() + 1, size));
+        }
+        if (!maze[p.getX()][p.getY() + 1].equals("@")) {
+            neighboursList.add(new Place(p.getX(), p.getY() + 1, size));
+        }
+        if (maze[p.getX() - 1][p.getY() + 1].equals("@")) {
+            neighboursList.add(new Place(p.getX() - 1, p.getY() + 1, size));
+        }
+        if (maze[p.getX() - 1][p.getY()].equals("@")) {
+            neighboursList.add(new Place(p.getX() - 1, p.getY(), size));
+        }
+        return neighboursList;
     }
 }
