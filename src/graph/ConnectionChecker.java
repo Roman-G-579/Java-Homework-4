@@ -9,6 +9,6 @@ public class ConnectionChecker<V> {
     }
 
     public boolean check(V v1, V v2) {
-
+        return true;
     }
 }
