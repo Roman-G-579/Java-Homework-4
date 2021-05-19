@@ -207,7 +207,7 @@ public class GraphTester extends Tester {
 	public void myTests() throws GraphException {
 		testStructure();
 		testPlace();
-		//testMaze();
+		testMaze();
 		testGraph();
 		testMaze2();
 		testConnectionChecker();

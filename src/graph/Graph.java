@@ -48,6 +48,16 @@ public class Graph<V> {
 
     //checks whether two vertices can be directly connected
     public boolean connected(V v1, V v2) throws GraphException {
-        return false;
+        boolean[] visited = new boolean[];
+
+        if (v1.equals(v2)) {
+            return true;
+        }
+        return DFS(v1, visited);
+
+    }
+
+    private boolean DFS(V element, boolean[] visited) {
+        return true;
     }
 }

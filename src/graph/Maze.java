@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class Maze implements GraphInterface<Place> {
@@ -26,6 +27,9 @@ public class Maze implements GraphInterface<Place> {
         }
 
         maze = new String[size][size];
+        for (String[] row : maze) {
+            Arrays.fill(row, ".");
+        }
         maze[startX][startY] = "S";
         maze[endX][endY] = "E";
     }
