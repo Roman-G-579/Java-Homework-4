@@ -1,6 +1,5 @@
 package cities;
 
-import javax.management.ObjectName;
 import java.util.Objects;
 
 public class City implements Comparable<City> {
