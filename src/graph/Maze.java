@@ -59,16 +59,12 @@ public class Maze implements GraphInterface<Place> {
         return str.toString();
     }
 
-//    public boolean isSolvable() throws GraphException {
-//        Place startPoint = new Place(startX, startY, size);
-//        Place endPoint = new Place(endX, endY, size);
-//
-//        graph.addVertex(startPoint);
-//        graph.addVertex(endPoint);
-//        return true;
-//    }
+    public boolean isSolvable() {
+        Graph<Place> graph = new Graph<>();
 
-    public Collection<Place> neighbours(Place p) {
+    }
+
+    public Collection<Place> neighbours(Place p) {// FIXME: 21/05/2021 check if possible to clean this method, if not, check if every point is valid
         ArrayList<Place> neighboursList = new ArrayList<>();
 
 
