@@ -1,6 +1,9 @@
 package graph;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Graph<V> {
 
@@ -13,10 +16,9 @@ public class Graph<V> {
             throw new GraphException("Element already in the graph");
         }
         vertices.add(v);
-        edges.put(v, new HashSet<>(Collections.singletonList(v)));
+        edges.put(v, new HashSet<>());
     }
 
-    //
     public void addEdge(V v1, V v2) throws GraphException {
         //if the edge already has a connection between both elements
         if (hasEdge(v1, v2)) {
@@ -31,12 +33,7 @@ public class Graph<V> {
 
     //checks whether two vertices are connected (directly or indirectly)
     public boolean hasEdge(V v1, V v2) {
-        for (Set<V> set : edges.values()) {
-            if (set.contains(v1) && set.contains(v2)) {
-                return true;
-            }
-        }
-        return false;
+        return edges.get(v1).contains(v2);
     }
 
     //checks whether two vertices can be directly connected
@@ -62,13 +59,12 @@ public class Graph<V> {
         }
 
         for (V element : edges.get(source)) {
-            //if the current element's set contains the destination element, return true
-            if (!edges.get(element).contains(destination)) {
-                //call the recursion with one of the neighbours
-                DFS(element, destination, visited);
-            } else {
-                return true;
+            if (visited.contains(element)) {
+                continue;
             }
+            //if the current element's set contains the destination element, return true
+            //call the recursion with one of the neighbours
+            return DFS(element, destination, visited);
         }
         return false;
     }

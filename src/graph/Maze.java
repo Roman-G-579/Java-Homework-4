@@ -1,8 +1,6 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 public class Maze implements GraphInterface<Place> {
 
@@ -62,28 +60,34 @@ public class Maze implements GraphInterface<Place> {
     public boolean isSolvable() {
         //creates a new graph using the 'place' type for its elements
         Graph<Place> graph = new Graph<>();
+        Set<Place> helpSet = new HashSet<>();
 
         Place startingPoint = new Place(startX, startY, size);
         Place endingPoint = new Place(endX, endY, size);
+        Place currentPlace = null;
 
         try {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (!maze[i][j].equals("@")) {
-                        Place currentPlace = new Place(i, j, size);
+                        currentPlace = new Place(i, j, size);
                         graph.addVertex(currentPlace);
-                        //checks whether the current place is connected to the place on its left
-                        if (j != 0 && !maze[i][j - 1].equals("@")) {
-                            graph.addEdge(currentPlace, new Place(i, j - 1, size));
-                        }
-                        //checks whether the current place is connected to the place above
-                        if (i != 0 && !maze[i - 1][j].equals("@")) {
-                            graph.addEdge(currentPlace, new Place(i - 1, j, size));
-                        }
+                        helpSet.add(currentPlace);
                     }
                 }
             }
-
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    //checks whether the current place is connected to the place on its left
+                    if (j != 0 && !maze[i][j - 1].equals("@")) {
+                        graph.addEdge(currentPlace, new Place(i, j - 1, size));
+                    }
+                    //checks whether the current place is connected to the place above
+                    if (i != 0 && !maze[i - 1][j].equals("@")) {
+                        graph.addEdge(currentPlace, new Place(i - 1, j, size));
+                    }
+                }
+            }
             return graph.connected(startingPoint, endingPoint);
         } catch (GraphException e) {
             e.printStackTrace();
@@ -122,3 +126,14 @@ public class Maze implements GraphInterface<Place> {
         return neighboursList;
     }
 }
+
+
+//checks whether the current place is connected to the place on its right
+/*                        if (j != size && !maze[i][j + 1].equals("@")) {
+                            graph.addEdge(currentPlace, new Place(i, j + 1, size));
+                        }
+                        //checks whether the current place is connected to the place below
+                        if (i != size && !maze[i + 1][j].equals("@")) {
+                            Place nextPlace = new Place(i + 1, j, size);
+                            graph.addEdge(currentPlace, nextPlace);
+                        }*/
