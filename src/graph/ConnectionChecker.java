@@ -8,7 +8,7 @@ public class ConnectionChecker<V> {
         this.g = g;
     }
 
-    public boolean check(V v1, V v2) {
+    public boolean check(V v1, V v2) {// FIXME: 21/05/2021 add this method
         return true;
     }
 }

@@ -60,8 +60,35 @@ public class Maze implements GraphInterface<Place> {
     }
 
     public boolean isSolvable() {
+        //creates a new graph using the 'place' type for its elements
         Graph<Place> graph = new Graph<>();
 
+        Place startingPoint = new Place(startX, startY, size);
+        Place endingPoint = new Place(endX, endY, size);
+
+        try {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (!maze[i][j].equals("@")) {
+                        Place currentPlace = new Place(i, j, size);
+                        graph.addVertex(currentPlace);
+                        //checks whether the current place is connected to the place on its left
+                        if (j != 0 && !maze[i][j - 1].equals("@")) {
+                            graph.addEdge(currentPlace, new Place(i, j - 1, size));
+                        }
+                        //checks whether the current place is connected to the place above
+                        if (i != 0 && !maze[i - 1][j].equals("@")) {
+                            graph.addEdge(currentPlace, new Place(i - 1, j, size));
+                        }
+                    }
+                }
+            }
+
+            return graph.connected(startingPoint, endingPoint);
+        } catch (GraphException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Collection<Place> neighbours(Place p) {// FIXME: 21/05/2021 check if possible to clean this method, if not, check if every point is valid

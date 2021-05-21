@@ -44,7 +44,6 @@ public class Graph<V> {
         if (!vertices.contains(v1) || !vertices.contains(v2)) {
             throw new GraphException("Error! one or both of the elements not found");
         }
-
         Set<V> visited = new HashSet<>();
 
         return DFS(v1, v2, visited);
