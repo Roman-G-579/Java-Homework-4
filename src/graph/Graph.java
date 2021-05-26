@@ -10,6 +10,7 @@ public class Graph<V> {
     private Set<V> vertices = new HashSet<>();
     private Map<V, Set<V>> edges = new HashMap<>();
 
+    //adds a new vertex to the vertices set
     public void addVertex(V v) throws GraphException {
 
         if (vertices.contains(v)) {
@@ -19,16 +20,18 @@ public class Graph<V> {
         edges.put(v, new HashSet<>());
     }
 
+    //connects two vertices if a connection is possible
     public void addEdge(V v1, V v2) throws GraphException {
         //if the edge already has a connection between both elements
         if (hasEdge(v1, v2)) {
             throw new GraphException("Error! connection already established.");
         }
-        if (connected(v1,v2)) {
+        if (connected(v1, v2)) {
             throw new GraphException("Error! cannot connect v1 and v2.");
         }
 
-        edges.put(v1, vertices);
+        edges.get(v1).add(v2);
+        edges.get(v2).add(v1);
     }
 
     //checks whether two vertices are connected (directly or indirectly)
@@ -46,25 +49,26 @@ public class Graph<V> {
         return DFS(v1, v2, visited);
     }
 
+    //checks whether the destination vertex is reachable by traversing through the neighbours of the source vertex
     private boolean DFS(V source, V destination, Set<V> visited) {
+        //if the current checked element is equal to the destination element, return true
+        if (source.equals(destination)) {
+            return true;
+        }
+
+        //prevents the algorithm from checking vertices which were previously visited
         if (visited.contains(source)) {
             return false;
         }
         //adds the current source element to the visited set
         visited.add(source);
 
-        //if the current checked element equals to the destination element, return true
-        if (source.equals(destination)) {
-            return true;
-        }
-
         for (V element : edges.get(source)) {
-            if (visited.contains(element)) {
-                continue;
-            }
             //if the current element's set contains the destination element, return true
             //call the recursion with one of the neighbours
-            return DFS(element, destination, visited);
+            if (DFS(element, destination, visited)) {
+                return true;
+            }
         }
         return false;
     }

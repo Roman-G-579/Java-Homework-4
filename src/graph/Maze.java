@@ -32,6 +32,7 @@ public class Maze implements GraphInterface<Place> {
         maze[endX][endY] = "E";
     }
 
+    //adds a boundary to the maze
     public boolean addWall(int x, int y) {
         //checks whether the given coordinate already exists in the maze
         if (maze[x][y].equals("@") ||
@@ -45,6 +46,7 @@ public class Maze implements GraphInterface<Place> {
         return true;
     }
 
+    //prints a representation of the maze
     public String toString() {
         StringBuilder str = new StringBuilder();
 
@@ -57,37 +59,41 @@ public class Maze implements GraphInterface<Place> {
         return str.toString();
     }
 
+    //creates a graph using a maze's structure, and checks whether its possible
+    //to establish a connection between the start and end points
     public boolean isSolvable() {
         //creates a new graph using the 'place' type for its elements
         Graph<Place> graph = new Graph<>();
-        Set<Place> helpSet = new HashSet<>();
 
         Place startingPoint = new Place(startX, startY, size);
         Place endingPoint = new Place(endX, endY, size);
-        Place currentPlace = null;
 
         try {
+            //places the vertices on the graph
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (!maze[i][j].equals("@")) {
-                        currentPlace = new Place(i, j, size);
-                        graph.addVertex(currentPlace);
-                        helpSet.add(currentPlace);
+                        graph.addVertex(new Place(i, j, size));
                     }
                 }
             }
+            //connects the vertices on the graph
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
+                    if (maze[i][j].equals("@")) {
+                        continue;
+                    }
                     //checks whether the current place is connected to the place on its left
                     if (j != 0 && !maze[i][j - 1].equals("@")) {
-                        graph.addEdge(currentPlace, new Place(i, j - 1, size));
+                        graph.addEdge(new Place(i, j, size), new Place(i, j - 1, size));
                     }
                     //checks whether the current place is connected to the place above
                     if (i != 0 && !maze[i - 1][j].equals("@")) {
-                        graph.addEdge(currentPlace, new Place(i - 1, j, size));
+                        graph.addEdge(new Place(i, j, size), new Place(i - 1, j, size));
                     }
                 }
             }
+            //checks whether a connection between the points is possible
             return graph.connected(startingPoint, endingPoint);
         } catch (GraphException e) {
             e.printStackTrace();
@@ -95,45 +101,28 @@ public class Maze implements GraphInterface<Place> {
         return false;
     }
 
-    public Collection<Place> neighbours(Place p) {// FIXME: 21/05/2021 check if possible to clean this method, if not, check if every point is valid
+    //returns a list of the potential neighbours of a given place in the maze
+    public Collection<Place> neighbours(Place p) {
         ArrayList<Place> neighboursList = new ArrayList<>();
 
-
-        if (!maze[p.getX() - 1][p.getY() - 1].equals("@")) {
-            neighboursList.add(new Place(p.getX() - 1, p.getY() - 1, size));
+        //checks whether the current place is a valid edge in the maze
+        if (p.getX() > size || p.getY() > size || p.getX() < 0 || p.getY() < 0) {
+            return null;
         }
-        if (!maze[p.getX()][p.getY() - 1].equals("@")) {
+
+        //checks the neighbours from all direction of the given place
+        if (p.getY() > 0 && !maze[p.getX()][p.getY() - 1].equals("@")) {
             neighboursList.add(new Place(p.getX(), p.getY() - 1, size));
         }
-        if (maze[p.getX() + 1][p.getY() - 1].equals("@")) {
-            neighboursList.add(new Place(p.getX() + 1, p.getY() - 1, size));
-        }
-        if (maze[p.getX() + 1][p.getY()].equals("@")) {
+        if (p.getX() < size - 1 && !maze[p.getX() + 1][p.getY()].equals("@")) {
             neighboursList.add(new Place(p.getX() + 1, p.getY(), size));
         }
-        if (!maze[p.getX() + 1][p.getY() + 1].equals("@")) {
-            neighboursList.add(new Place(p.getX() + 1, p.getY() + 1, size));
-        }
-        if (!maze[p.getX()][p.getY() + 1].equals("@")) {
+        if (p.getY() < size - 1 && !maze[p.getX()][p.getY() + 1].equals("@")) {
             neighboursList.add(new Place(p.getX(), p.getY() + 1, size));
         }
-        if (maze[p.getX() - 1][p.getY() + 1].equals("@")) {
-            neighboursList.add(new Place(p.getX() - 1, p.getY() + 1, size));
-        }
-        if (maze[p.getX() - 1][p.getY()].equals("@")) {
+        if (p.getX() > 0 && !maze[p.getX() - 1][p.getY()].equals("@")) {
             neighboursList.add(new Place(p.getX() - 1, p.getY(), size));
         }
         return neighboursList;
     }
 }
-
-
-//checks whether the current place is connected to the place on its right
-/*                        if (j != size && !maze[i][j + 1].equals("@")) {
-                            graph.addEdge(currentPlace, new Place(i, j + 1, size));
-                        }
-                        //checks whether the current place is connected to the place below
-                        if (i != size && !maze[i + 1][j].equals("@")) {
-                            Place nextPlace = new Place(i + 1, j, size);
-                            graph.addEdge(currentPlace, nextPlace);
-                        }*/

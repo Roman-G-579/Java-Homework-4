@@ -34,8 +34,9 @@ public class Place {
         return x == place.x && y == place.y && bound == place.bound;
     }
 
+    //ensures that the returned hashes are as different from each other as possible
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, bound);
+        return Objects.hash(x, y, bound) * 31 + y;
     }
 }
