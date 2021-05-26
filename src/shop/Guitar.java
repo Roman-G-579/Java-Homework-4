@@ -14,10 +14,12 @@ public class Guitar extends Instrument {
         serial = serialNum++;
     }
 
+    //returns the guitar type
     public Type getType() {
         return type;
     }
 
+    //prints a formatted string of the guitar's details
     public String toString() {
         return "Guitar(" + type + ") " + company +
                 "(" + serial + ")" + ", price = " + price;

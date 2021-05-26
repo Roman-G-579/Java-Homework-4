@@ -9,10 +9,12 @@ public class World {
 
     private Map<String, Country> countries = new TreeMap<>();
 
+    //adds a country to the TreeMap
     public void addCountry(String name) {
         countries.put(name, new Country(name));
     }
 
+    //creates a city object and adds it to the chosen country as long as its in the countries TreeMap
     public void addCity(String name, String countryName, int population) throws IllegalArgumentException {
         if(countries.containsKey(countryName)) {
             Country country = countries.get(countryName);
@@ -22,6 +24,7 @@ public class World {
         }
     }
 
+    //returns the total population of all the countries in the TreeMap
     public int population() {
         int total = 0;
         for(Map.Entry<String, Country> entry : countries.entrySet()){
@@ -30,6 +33,7 @@ public class World {
         return total;
     }
 
+    //returns an array list of all the cities with a population under the given boundary
     public List<City> smallCities(int under) {
         List<City> underCity = new ArrayList<>();
         for(Map.Entry<String, Country> entry : countries.entrySet()){
@@ -38,6 +42,7 @@ public class World {
         return underCity;
     }
 
+    //prints a formatted report of all the world's population figures
     public String report(){
         StringBuilder report = new StringBuilder();
         for(Map.Entry<String, Country> entry : countries.entrySet()){

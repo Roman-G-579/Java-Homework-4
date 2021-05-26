@@ -6,6 +6,7 @@ public class Equiv<E> {
 
     private List<Set<E>> listOfSets = new ArrayList<>();
 
+    //updates teh equivalence of two elements
     public void add(E e1, E e2) {
         int e1Found = -1;
         int e2Found = -1;
@@ -49,6 +50,7 @@ public class Equiv<E> {
         }
     }
 
+    //checks whether the two elements are equivalent
     public boolean are(E e1, E e2) {
         for (Set<E> listOfSet : listOfSets) {
             if (listOfSet.contains(e1) && listOfSet.contains(e2)) {

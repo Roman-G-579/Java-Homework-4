@@ -15,6 +15,7 @@ public class Country implements Comparable<Country> {
         return name;
     }
 
+    //adds the city to the country's city list
     public void addCity(City city) {
         if (!city.getCountry().equals(this)) {
             throw new IllegalArgumentException();
@@ -22,6 +23,7 @@ public class Country implements Comparable<Country> {
         cities.add(city);
     }
 
+    //calculates the country's population
     public int population() {
         int totalPopulation = 0;
         for (City city : cities) {
@@ -34,6 +36,7 @@ public class Country implements Comparable<Country> {
         return getName();
     }
 
+    //returns a list of all the cities in the country with a population under the given boundary
     public List<City> smallCities(int under) {
         List<City> underCity = new ArrayList<>();
         for (City city : cities) {
@@ -44,6 +47,7 @@ public class Country implements Comparable<Country> {
         return underCity;
     }
 
+    //prints a formatted report of the country's population figures
     public String report() {
         StringBuilder report = new StringBuilder();
 

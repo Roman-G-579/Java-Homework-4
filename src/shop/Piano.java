@@ -14,10 +14,12 @@ public class Piano extends Instrument {
         serial = serialNum++;
     }
 
+    //returns the number of octaves in the piano
     public int getOctaves() {
         return octaves;
     }
 
+    //prints a formatted string of the piano's details
     public String toString() {
         return "Piano(" + octaves + " octaves) " + company +
                 "(" + serial + ")" + ", price = " + price;
